@@ -1,0 +1,22 @@
+[project]
+name = "FramelessWindow"
+version = "1.0.0"
+authors = [
+  { name="Van Loc", email="vvanloc.vo@gmail.com" },
+]
+description = "PyQT FramelessWindow"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Window",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/vanlocvo/FramelessWindow"
+"Bug Tracker" = "https://github.com/vanlocvo/FramelessWindow/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

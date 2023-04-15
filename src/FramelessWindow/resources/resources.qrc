@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="close_btn">
+        <file alias="black">files/close_black.svg</file>
+        <file alias="white">files/close_white.svg</file>
+    </qresource>
+</RCC>
