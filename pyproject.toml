@@ -12,6 +12,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: Window",
 ]
+dependencies = [
+  'PySide6',
+  'pywin32'
+]
 
 [project.urls]
 "Homepage" = "https://github.com/vanlocvo/FramelessWindow"
