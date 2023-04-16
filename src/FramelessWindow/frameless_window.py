@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QWidget, QToolButton, QLabel, QHBoxLayout
 from win32comext.shell import shellcon
 
 from .window_effects import WindowsEffects
-from .resources import resources
+from .resources import resources_rc
 
 
 class APPBARDATA(Structure):
