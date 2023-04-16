@@ -51,8 +51,8 @@ class NCCALCSIZE_PARAMS(Structure):
 
 
 class SYSTEMTHEME:
-    IsDarkTheme = None
-    AccentColor = None
+    IsDarkTheme = False
+    AccentColor = 'rgb(0, 120, 215)'
 
     @classmethod
     def Update(cls):
