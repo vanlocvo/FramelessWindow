@@ -3,7 +3,7 @@ import sys
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
-from FramelessWindow import FramelessWindow
+from FramelessWindow import FramelessWindow, SYSTEMTHEME
 
 
 class ExampleWindow(FramelessWindow):
@@ -12,6 +12,7 @@ class ExampleWindow(FramelessWindow):
         self.resize(640, 480)
         self.setWindowTitle("Frameless Window")
         self.setWindowIcon(QIcon("logo.svg"))
+        print(SYSTEMTHEME.AccentColor)
 
 
 if __name__ == '__main__':

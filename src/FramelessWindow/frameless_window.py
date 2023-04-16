@@ -52,16 +52,28 @@ class NCCALCSIZE_PARAMS(Structure):
 
 class SYSTEMTHEME:
     IsDarkTheme = None
+    AccentColor = None
+
+    @classmethod
+    def Update(cls):
+        path_theme = r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+        name_theme = r"AppsUseLightTheme"
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, path_theme) as registry_key:
+            value, regtype = winreg.QueryValueEx(registry_key, name_theme)
+            cls.IsDarkTheme = not bool(value)
+
+        path_accent = r'SOFTWARE\\Microsoft\Windows\\CurrentVersion\\Explorer\\Accent'
+        name_accent =   r"AccentColorMenu"
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, path_accent) as registry_key:
+            value, regtype = winreg.QueryValueEx(registry_key, name_accent)
+            accent = value - 4278190080
+            accent = str(hex(accent)).split('x')[1]
+            accent = accent[4:6]+accent[2:4]+accent[0:2]
+            accent = 'rgb'+str(tuple(int(accent[i:i+2], 16) for i in (0, 2, 4)))
+            cls.AccentColor = accent
 
 LPNCCALCSIZE_PARAMS = POINTER(NCCALCSIZE_PARAMS)
 
-
-def is_system_dark_mode():
-    path = r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-    name = r"AppsUseLightTheme"
-    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, path) as registry_key:
-        value, regtype = winreg.QueryValueEx(registry_key, name)
-    return not bool(value)
 
 
 def is_maximized(h_wnd):
@@ -185,7 +197,9 @@ class FramelessWindowBase(QWidget):
         self._effect_timer.setSingleShot(True)
         self._effect_timer.timeout.connect(self.set_effect)
 
-        SYSTEMTHEME.IsDarkTheme = is_system_dark_mode()
+        SYSTEMTHEME.Update()
+
+        self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
 
         if SYSTEMTHEME.IsDarkTheme:
             self.acrylic_color = invert_color(self.COLOR)
@@ -208,11 +222,10 @@ class FramelessWindowBase(QWidget):
 
 
     def set_effect(self, enable=True):
-        current_system_theme = is_system_dark_mode()
-        if self.effect_enabled == enable and SYSTEMTHEME.IsDarkTheme == current_system_theme:
+        if self.effect_enabled == enable and SYSTEMTHEME.IsDarkTheme == self.is_apply_dark_theme:
             return
         
-        SYSTEMTHEME.IsDarkTheme = current_system_theme
+        self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
 
         if SYSTEMTHEME.IsDarkTheme:
             self.acrylic_color = invert_color(self.COLOR)
@@ -345,6 +358,7 @@ class FramelessWindowBase(QWidget):
             res = 0 if not msg.wParam else win32con.WVR_REDRAW
             return True, res
         elif msg.message == win32con.WM_SETTINGCHANGE:
+            SYSTEMTHEME.Update()
             self.set_effect()
 
         return False, 0
