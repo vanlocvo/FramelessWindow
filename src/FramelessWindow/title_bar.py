@@ -21,6 +21,8 @@ class TitleBarButtonState(Enum):
 class TitleBarButton(QToolButton):
     def __init__(self, parent):
         super().__init__(parent)
+        self.setObjectName("TitleBarButton")
+
         color_dark = "F" * 6
         color_white = "0" * 6
         self.colors = {
@@ -67,6 +69,10 @@ class TitleBarButton(QToolButton):
 
 
 class MinimizeButton(TitleBarButton):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setObjectName("MinimizeButton")
+
     def paintEvent(self, event):
         super().paintEvent(event)
         painter = QPainter(self)
@@ -79,6 +85,7 @@ class MinimizeButton(TitleBarButton):
 class MaximizeButton(TitleBarButton):
     def __init__(self, parent):
         super().__init__(parent)
+        self.setObjectName("MaximizeButton")
         self.is_max = False
 
     def paintEvent(self, event):
@@ -110,6 +117,7 @@ class MaximizeButton(TitleBarButton):
 class CloseButton(TitleBarButton):
     def __init__(self, parent):
         super().__init__(parent)
+        self.setObjectName("CloseButton")
         self.colors = {
             True: ("transparent", "#C42B1C", "#C83C30"),
             False: ("transparent", "#C42B1C", "#C83C30")
@@ -144,6 +152,7 @@ class CloseButton(TitleBarButton):
 class TitleBar(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
+        self.setObjectName("TitleBar")
         self.setFixedHeight(32)
 
         self.icon = QLabel(self)

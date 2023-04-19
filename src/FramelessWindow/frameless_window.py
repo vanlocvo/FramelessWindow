@@ -26,6 +26,10 @@ class FramelessWindowBase(QWidget):
         ----------
         """
         super().__init__()
+        self.setObjectName("FramelessWindowBase")
+
+        # set margins for title bar
+        self.setContentsMargins(0, 30, 0, 0)
         self.is_win11 = getwindowsversion().build >= 22000
         self.use_mica = self.is_win11
         
@@ -44,7 +48,6 @@ class FramelessWindowBase(QWidget):
         else:
             self.acrylic_color = self.COLOR
 
-        self.title_bar = None
         self.max_btn_hovered = False
         self.title_bar = TitleBar(self)
 
