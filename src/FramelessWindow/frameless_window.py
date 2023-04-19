@@ -17,7 +17,7 @@ from .title_bar import TitleBar, TitleBarButtonState
 LPNCCALCSIZE_PARAMS = POINTER(NCCALCSIZE_PARAMS)
 
 class FramelessWindowBase(QWidget):
-    COLOR = "F2F2F299"
+    COLOR = "F2F2F2F2"
     BORDER_WIDTH = 4
     def __init__(self):
         """ FramelessWindowBase
