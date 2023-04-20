@@ -96,11 +96,3 @@ def get_resize_border_thickness(h_wnd):
     windll.dwmapi.DwmIsCompositionEnabled(byref(b_result))
     thickness = 8 if bool(b_result.value) else 4
     return round(thickness * window.devicePixelRatio())
-
-def invert_color(color):
-    inverted_color = ''
-    for i in range(0, 5, 2):
-        channel = int(color[i:i + 2], base=16)
-        inverted_color += hex(round(channel / 6))[2:].upper().zfill(2)
-    inverted_color += color[-2:]
-    return inverted_color

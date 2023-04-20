@@ -17,7 +17,8 @@ from .title_bar import TitleBar, TitleBarButtonState
 LPNCCALCSIZE_PARAMS = POINTER(NCCALCSIZE_PARAMS)
 
 class FramelessWindowBase(QWidget):
-    COLOR = "F2F2F2F2"
+    COLOR_LIGHT = "FCFCFC99"
+    COLOR_DARK = "2C2C2C99"
     BORDER_WIDTH = 4
     def __init__(self):
         """ FramelessWindowBase
@@ -44,9 +45,9 @@ class FramelessWindowBase(QWidget):
         self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
 
         if SYSTEMTHEME.IsDarkTheme:
-            self.acrylic_color = invert_color(self.COLOR)
+            self.acrylic_color = self.COLOR_DARK
         else:
-            self.acrylic_color = self.COLOR
+            self.acrylic_color = self.COLOR_LIGHT
 
         self.max_btn_hovered = False
         self.title_bar = TitleBar(self)
@@ -69,9 +70,9 @@ class FramelessWindowBase(QWidget):
         self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
 
         if SYSTEMTHEME.IsDarkTheme:
-            self.acrylic_color = invert_color(self.COLOR)
+            self.acrylic_color = self.COLOR_DARK
         else:
-            self.acrylic_color = self.COLOR
+            self.acrylic_color = self.COLOR_LIGHT
 
         self.effect_enabled = enable
         if enable and self.use_mica:
