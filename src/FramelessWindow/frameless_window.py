@@ -43,6 +43,7 @@ class FramelessWindowBase(QWidget):
         SYSTEMTHEME.Update()
 
         self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
+        self.accent_color = SYSTEMTHEME.AccentColor
 
         if SYSTEMTHEME.IsDarkTheme:
             self.acrylic_color = self.COLOR_DARK
@@ -64,10 +65,11 @@ class FramelessWindowBase(QWidget):
 
 
     def set_effect(self, enable=True):
-        if self.effect_enabled == enable and SYSTEMTHEME.IsDarkTheme == self.is_apply_dark_theme:
+        if self.effect_enabled == enable and SYSTEMTHEME.IsDarkTheme == self.is_apply_dark_theme and self.accent_color == SYSTEMTHEME.AccentColor:
             return
         
         self.is_apply_dark_theme = SYSTEMTHEME.IsDarkTheme
+        self.accent_color = SYSTEMTHEME.AccentColor
 
         if SYSTEMTHEME.IsDarkTheme:
             self.acrylic_color = self.COLOR_DARK
