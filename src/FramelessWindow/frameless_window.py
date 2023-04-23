@@ -133,11 +133,6 @@ class FramelessWindowBase(QWidget):
             pos = QCursor.pos()
             x = pos.x() - self.x()
             y = pos.y() - self.y()
-            if self.is_win11 and self.title_bar.childAt(
-                    pos - self.geometry().topLeft()) is self.title_bar.max_btn:
-                self.max_btn_hovered = True
-                self.title_bar.max_btn.set_state(TitleBarButtonState.HOVER)
-                return True, win32con.HTMAXBUTTON
             lx = x < self.BORDER_WIDTH
             rx = x > self.width() - self.BORDER_WIDTH
             ty = y < self.BORDER_WIDTH
