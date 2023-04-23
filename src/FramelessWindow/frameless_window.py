@@ -153,17 +153,6 @@ class FramelessWindowBase(QWidget):
                 return True, win32con.HTLEFT
             elif ty:
                 return True, win32con.HTTOP
-        elif self.is_win11 and self.max_btn_hovered:
-            if msg.message == win32con.WM_NCLBUTTONDOWN:
-                self.title_bar.max_btn.set_state(TitleBarButtonState.PRESSED)
-                return True, 0
-            elif msg.message in [win32con.WM_NCLBUTTONUP,
-                                 win32con.WM_NCRBUTTONUP]:
-                self.title_bar.max_btn.click()
-            elif msg.message in [0x2A2, win32con.WM_MOUSELEAVE] \
-                    and self.title_bar.max_btn.get_state() != 0:
-                self.max_btn_hovered = False
-                self.title_bar.max_btn.set_state(TitleBarButtonState.NORMAL)
 
         elif msg.message == win32con.WM_NCCALCSIZE:
             if msg.wParam:
