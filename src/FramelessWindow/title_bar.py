@@ -189,34 +189,11 @@ class TitleBar(QWidget):
 
     def __toggle_max_state(self):
         is_max = self.window().isMaximized()
-        if is_max or self.max_btn.is_max:
-            self.max_btn.is_max = False
-
-            # restore previous window size, position, and state
-            self.window().move(self.window().previous_pos)
-            self.window().resize(self.window().previous_size)
-            self.window().setWindowState(self.window().previous_state)
+        self.max_btn.is_max = not is_max
+        if is_max:
+            self.window().showNormal()
         else:
-            self.max_btn.is_max = True
-
-            hwnd = self.window().winId()
-            # get Monitor size
-            monitor = win32api.MonitorFromWindow(hwnd, win32con.MONITOR_DEFAULTTONEAREST)
-            monitor_info = win32api.GetMonitorInfo(monitor)
-            monitor_rect = monitor_info.get("Work")
-            
-            # get current window size, position, and state to restore later
-            current_size = self.window().size()
-            current_pos = self.window().pos()
-            current_state = self.window().windowState()
-
-            # set window to maximized equal to monitor size using win32gui
-            self.window().setGeometry(*monitor_rect)
-
-            # save previous window size, position, and state
-            self.window().previous_size = current_size
-            self.window().previous_pos = current_pos
-            self.window().previous_state = current_state
+            self.window().showMaximized()
 
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:

@@ -53,9 +53,10 @@ class FramelessWindowBase(QWidget):
         self.max_btn_hovered = False
         self.title_bar = TitleBar(self)
 
-        self.win_effects = WindowsEffects()
-        self.win_effects.add_window_animation(self.winId())
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+
+        self.win_effects = WindowsEffects()
+        
         self.win_effects.add_window_animation(self.winId())
         self.set_effect()
         if self.is_win11:
