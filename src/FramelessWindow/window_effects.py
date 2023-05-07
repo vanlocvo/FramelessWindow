@@ -160,6 +160,19 @@ class WindowsEffects:
             | win32con.WS_THICKFRAME
         )
 
+    @staticmethod
+    def remove_window_animation(h_wnd):
+        h_wnd = int(h_wnd)
+        style = win32gui.GetWindowLong(h_wnd, win32con.GWL_STYLE)
+        win32gui.SetWindowLong(
+            h_wnd, win32con.GWL_STYLE,
+            style
+            & ~win32con.WS_MINIMIZEBOX
+            & ~win32con.WS_MAXIMIZEBOX
+            & ~win32con.WS_CAPTION
+            & ~win32con.WS_THICKFRAME
+        )
+
     def add_blur_behind_window(self, h_wnd):
         blur_behind = DWM_BLURBEHIND(1, True, 0, False)
         self.dwm_enable_blur_behind_win(int(h_wnd), byref(blur_behind))

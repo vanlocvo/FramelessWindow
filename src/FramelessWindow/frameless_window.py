@@ -54,10 +54,10 @@ class FramelessWindowBase(QWidget):
         self.title_bar = TitleBar(self)
 
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.is_add_window_animation = False
 
         self.win_effects = WindowsEffects()
-        
-        self.win_effects.add_window_animation(self.winId())
+
         self.set_effect()
         if self.is_win11:
             self.win_effects.add_blur_behind_window(self.winId())
@@ -87,6 +87,16 @@ class FramelessWindowBase(QWidget):
             self.win_effects.remove_background_effect(self.winId())
         self.update()
         self.title_bar.repaint()
+
+    def showMaximized(self) -> None:
+        self.win_effects.remove_window_animation(self.winId())
+        self.is_add_window_animation = False
+        return super().showMaximized()
+
+    def showNormal(self) -> None:
+        self.win_effects.add_window_animation(self.winId())
+        self.is_add_window_animation = True
+        return super().showNormal()
 
     def _temporary_disable_effect(self):
         self.set_effect(False)
@@ -155,7 +165,7 @@ class FramelessWindowBase(QWidget):
             elif ty:
                 return True, win32con.HTTOP
 
-        elif msg.message == win32con.WM_NCCALCSIZE:
+        elif msg.message == win32con.WM_NCCALCSIZE and self.is_add_window_animation:
             if msg.wParam:
                 rect = cast(msg.lParam, LPNCCALCSIZE_PARAMS).contents.rgrc[0]
             else:
