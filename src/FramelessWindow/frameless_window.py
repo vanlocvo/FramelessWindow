@@ -31,7 +31,8 @@ class FramelessWindowBase(QWidget):
 
         # set margins for title bar
         self.setContentsMargins(0, 30, 0, 0)
-        self.is_win11 = getwindowsversion().build >= 22000
+        # self.is_win11 = getwindowsversion().build >= 22000
+        self.is_win11 = False
         self.use_mica = self.is_win11
         
         self.effect_enabled = False
